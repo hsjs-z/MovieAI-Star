@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.movie.mapper.OrderMapper">
+    <update id="updateById">
+        UPDATE `order`
+        SET status = #{status},
+        <if test="payTime != null">
+            pay_time = #{payTime},
+        </if>
+        <if test="refundTime != null">
+            refund_time = #{refundTime}
+        </if>
+        WHERE id = #{id}
+    </update>
+    <select id="getPageOrder" resultType="com.example.movie.dto.OrderDTO">
+        SELECT o.id,
+        o.order_no,
+        o.user_id,
+        u.username,
+        o.total_price,
+        o.status,
+        o.create_time,
+        o.pay_time
+        FROM `order` o
+        LEFT JOIN `user` u ON u.id = o.user_id
+        <where>
+            <if test="orderNo != null and orderNo != ''">
+                AND o.order_no LIKE CONCAT('%', #{orderNo}, '%')
+            </if>
+            <if test="userId != null">
+                AND o.user_id = #{userId}
+            </if>
+            <if test="status != null">
+                AND o.status = #{status}
+            </if>
+            <!-- 时间段筛选：startDate 不为空 -->
+            <if test="startDate != null">
+                AND o.create_time &gt;= #{startDate}
+            </if>
+            <!-- endDate不为空，查到当天24点 -->
+            <if test="endDate != null">
+                AND o.create_time &lt; DATE_ADD(#{endDate}, INTERVAL 1 DAY)
+            </if>
+        </where>
+        ORDER BY o.create_time DESC
+    </select>
+    <select id="selById" resultType="com.example.movie.dto.OrderDetailDTO">
+        SELECT o.id, o.order_no, o.user_id, u.username, o.total_price, o.status, o.create_time, o.pay_time, o.refund_time
+        FROM `order` o
+                 LEFT JOIN `user` u ON u.id = o.user_id
+        WHERE o.id = #{id};
+    </select>
+    <select id="selTicById" resultType="com.example.movie.dto.TicketDTO">
+        SELECT
+            oi.id AS itemId,
+            m.name AS movieName,
+            m.poster_url AS posterUrl,
+            h.name AS hallName,
+            h.location,
+            s.start_time AS startTime,
+            s.end_time AS endTime,
+            oi.seat_row AS seatRow,
+            oi.seat_col AS seatCol,
+            oi.price
+        FROM order_item oi
+                 JOIN `session` s ON s.id = oi.session_id
+                 JOIN movie m ON m.id = s.movie_id
+                 JOIN hall h ON h.id = s.hall_id
+        WHERE oi.order_id = #{id}
+    </select>
+</mapper>
