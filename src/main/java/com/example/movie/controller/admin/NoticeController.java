@@ -2,9 +2,9 @@ package com.example.movie.controller.admin;
 
 import com.example.movie.common.result.PageResult;
 import com.example.movie.common.result.Result;
-import com.example.movie.dto.MoviePageQueryDTO;
 import com.example.movie.entity.Notice;
 import com.example.movie.service.NoticeService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/notice")
 @Slf4j
+@Api(tags = "公告管理")
 public class NoticeController {
     @Autowired
     private NoticeService noticeService;
@@ -33,6 +34,7 @@ public class NoticeController {
 
     // 新增
     @PostMapping
+    @ApiOperation("新增公告")
     public Result add(@RequestBody Notice notice) {
         log.info("新增公告{}", notice);
         noticeService.addNotice(notice);
@@ -41,6 +43,7 @@ public class NoticeController {
 
     // 编辑
     @PutMapping
+    @ApiOperation("编辑公告")
     public Result update(@RequestBody Notice notice) {
         log.info("编辑公告{}", notice);
         noticeService.updateNotice(notice);
@@ -49,6 +52,7 @@ public class NoticeController {
 
     // 删除
     @PutMapping("/{id}")
+    @ApiOperation("删除公告")
     public Result delete(@PathVariable Long id) {
         log.info("删除公告{}", id);
         noticeService.deleteNotice(id);

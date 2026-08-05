@@ -25,7 +25,7 @@ public class MovieDTO implements Serializable {
     private String name;
 
     /** 类型（多个用逗号分隔） */
-    private Integer typeCode;
+    private String typeCodes;
 
     /** 片长（分钟） */
     private Integer duration;

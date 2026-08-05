@@ -65,7 +65,7 @@
             <if test="name != null and name != ''">
                 AND m.`name` LIKE CONCAT('%',#{name},'%')
             </if>
-            <if test="status != null and status != ''">
+            <if test="status != null">
                 AND m.`status` = #{status}
             </if>
         </where>

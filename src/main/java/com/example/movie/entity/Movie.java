@@ -36,7 +36,7 @@ public class Movie implements Serializable {
     private String cast;
 
     /** 类型（多个用逗号分隔） */
-    private Integer typeCode;
+    private String typeCodes;
 
     /** 制片国家/地区 */
     private Integer countryCode;

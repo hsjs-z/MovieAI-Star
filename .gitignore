@@ -1,0 +1,5 @@
+# 编译输出
+target/
+
+# IDE配置
+.idea/
