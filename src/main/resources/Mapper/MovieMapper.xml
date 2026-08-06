@@ -4,10 +4,10 @@
 <mapper namespace="com.example.movie.mapper.MovieMapper">
     <insert id="addMovie">
         INSERT INTO movie (
-            name, director, cast, type_code, country_code, language_code,
+            name, director, cast, type_codes, country_code, language_code,
             duration, release_date, poster_url, description, score, status
         ) VALUES (
-                     #{name}, #{director}, #{cast}, #{typeCode}, #{countryCode}, #{languageCode},
+                     #{name}, #{director}, #{cast}, #{typeCodes}, #{countryCode}, #{languageCode},
                      #{duration}, #{releaseDate}, #{posterUrl}, #{description}, #{score}, #{status}
                  )
     </insert>
@@ -23,8 +23,8 @@
             <if test="cast != null and cast != ''">
                 cast = #{cast},
             </if>
-            <if test="typeCode != null">
-                type_code = #{typeCode},
+            <if test="typeCodes != null">
+                type_codes = #{typeCodes},
             </if>
             <if test="countryCode != null">
                 country_code = #{countryCode},
