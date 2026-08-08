@@ -9,7 +9,6 @@ import com.example.movie.mapper.SessionMapper;
 import com.example.movie.service.HallService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +80,15 @@ public class HallServiceImpl implements HallService {
         }
 
         hallMapper.delHall(id);
+    }
+
+    /**
+     * 查询影厅名，用于前端回显
+     * @return
+     */
+    public List<String> getHallName() {
+        List<String> list =  hallMapper.gethallName();
+        return list;
     }
 
     /**

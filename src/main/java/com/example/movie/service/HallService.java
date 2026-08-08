@@ -4,6 +4,8 @@ import com.example.movie.common.result.PageResult;
 import com.example.movie.dto.HallDTO;
 import com.example.movie.dto.HallPageQueryDTO;
 
+import java.util.List;
+
 /**
  * 作者: 枷
  * 时间:2026/7/25 下午10:10
@@ -19,4 +21,6 @@ public interface HallService {
     HallDTO getHallById(Long id);
 
     void deleteHall(Long id);
+
+    List<String> getHallName();
 }

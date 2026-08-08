@@ -68,6 +68,7 @@ public class MovieController {
     }
 
     @GetMapping("/cinema")
+    @ApiOperation("根据电影id查询影院信息")
     public Result<List<MovieUtilsDTO>> cinemas(@RequestParam Long movieId) {
         return Result.success(movieService.getCinemasByMovie(movieId));
     }

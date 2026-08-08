@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 作者: 枷
  * 时间:2026/7/25 下午7:57
@@ -30,6 +32,14 @@ public class HallController {
         log.info("查询影厅信息{}", pageQueryDTO);
         PageResult pageResult = hallService.getHallPage(pageQueryDTO);
         return Result.success(pageResult);
+    }
+
+    @GetMapping("/name")
+    @ApiOperation("查询影厅名，用于前端回显")
+    public Result getHallName() {
+        log.info("查询影厅名");
+        List<String> list = hallService.getHallName();
+        return Result.success(list);
     }
 
     @PostMapping

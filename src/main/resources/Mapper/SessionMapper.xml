@@ -33,7 +33,7 @@
             </if>
             <!-- 3. 按门店位置筛选 -->
             <if test="location != null and location != ''">
-                AND h.location = #{location}
+                AND h.location LIKE CONCAT('%', #{location}, '%')
             </if>
             <!-- 4. 按日期范围筛选 -->
             <if test="startTime != null">

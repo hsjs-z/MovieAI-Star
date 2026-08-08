@@ -2,7 +2,6 @@ package com.example.movie.service.impl;
 
 import com.example.movie.common.result.PageResult;
 import com.example.movie.dto.*;
-import com.example.movie.entity.Movie;
 import com.example.movie.entity.Session;
 import com.example.movie.mapper.MovieMapper;
 import com.example.movie.mapper.SessionMapper;
@@ -44,6 +43,13 @@ public class SessionServiceImpl implements SessionService {
      */
     public PageResult getSessionPage(SessionPageQueryDTO pageQueryDTO) {
         PageHelper.startPage(pageQueryDTO.getPage(), pageQueryDTO.getPageSize());
+        LocalDateTime end = pageQueryDTO.getEndTime();
+        if(end != null){
+            // 把 00:00:00 → 23:59:59
+            end = end.toLocalDate().atTime(23,59,59);
+        }
+        log.info("end{}",end);
+        pageQueryDTO.setEndTime(end);
         Page<SessionDTO> page = sessionMapper.getSessionPage(pageQueryDTO);
         return new PageResult(page.getTotal(), page.getResult());
     }
