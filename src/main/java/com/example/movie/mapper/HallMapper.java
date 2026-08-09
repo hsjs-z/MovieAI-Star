@@ -29,6 +29,6 @@ public interface HallMapper {
     @Delete("delete from hall where id = #{id}")
     void delHall(Long id);
 
-    @Select("select name from hall")
-    List<String> gethallName();
+    @Select("select id,name from hall")
+    List<HallDTO> gethallName();
 }

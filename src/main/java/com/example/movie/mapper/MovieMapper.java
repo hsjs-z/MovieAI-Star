@@ -49,4 +49,7 @@ public interface MovieMapper {
  * @param movie 包含更新后电影信息的Movie对象
  */
     void updateMovie(Movie movie);
+
+    @Select("SELECT id,name FROM movie where status = 1")
+    List<MovieDTO> getMovieidName();
 }

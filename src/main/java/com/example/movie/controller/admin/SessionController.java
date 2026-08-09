@@ -2,12 +2,14 @@ package com.example.movie.controller.admin;
 
 import com.example.movie.common.result.PageResult;
 import com.example.movie.common.result.Result;
-import com.example.movie.dto.*;
+import com.example.movie.dto.SessionAddDTO;
+import com.example.movie.dto.SessionDetailDTO;
+import com.example.movie.dto.SessionPageQueryDTO;
+import com.example.movie.dto.SoldSeatDTO;
 import com.example.movie.service.SessionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,11 +59,11 @@ public class SessionController {
         return Result.success();
     }
 
-    @PutMapping("/status/{status}")
+    @PutMapping("/status/{id}/{status}")//？？？？
     @ApiOperation("根据id修改状态")
-    public Result updateSessionStatus(@PathVariable Integer status, Long id) {
+    public Result updateSessionStatus(@PathVariable Long id,@PathVariable Integer status) {
         log.info("根据id修改排片状态{}{}", status,id);
-        sessionService.updaStatus(status,id);
+        sessionService.updaStatus(id, status);
         return Result.success();
     }
 

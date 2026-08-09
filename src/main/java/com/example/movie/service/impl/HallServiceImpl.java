@@ -86,8 +86,8 @@ public class HallServiceImpl implements HallService {
      * 查询影厅名，用于前端回显
      * @return
      */
-    public List<String> getHallName() {
-        List<String> list =  hallMapper.gethallName();
+    public List<HallDTO> getHallName() {
+        List<HallDTO> list =  hallMapper.gethallName();
         return list;
     }
 

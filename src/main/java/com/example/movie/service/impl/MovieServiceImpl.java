@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -112,6 +111,15 @@ public class MovieServiceImpl implements MovieService {
             defaultCinema.setLocation("本影院");
             list.add(defaultCinema);
         }
+        return list;
+    }
+
+    /**
+     * 查询电影名称id
+     * @return
+     */
+    public List<MovieDTO> getMovieidName() {
+        List<MovieDTO> list = movieMapper.getMovieidName();
         return list;
     }
 }

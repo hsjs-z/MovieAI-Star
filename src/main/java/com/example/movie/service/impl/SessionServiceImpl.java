@@ -119,11 +119,11 @@ public class SessionServiceImpl implements SessionService {
         if (test.getStartTime().isBefore(LocalDateTime.now())) {
             throw new RuntimeException("只能编辑未来时间的场次");
         }
-        log.info("修改排片{}", test);
         Session session = new Session();
         BeanUtils.copyProperties(sessionaddDTO, session);
+        log.info("修改排片{}", session);
         session.setUpdateTime(LocalDateTime.now());
-        sessionMapper.updateSession(session);
+        sessionMapper.updateSessions(session);
     }
 
     /**
@@ -132,7 +132,7 @@ public class SessionServiceImpl implements SessionService {
      * @param status
      */
     @Transactional
-    public void updaStatus(Integer status, Long id) {
+    public void updaStatus(Long id, Integer status) {
         if (id == null){
             throw new RuntimeException("id不能为空");
         }

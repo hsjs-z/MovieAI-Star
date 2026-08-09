@@ -6,6 +6,18 @@
         INSERT INTO session (movie_id, hall_id, start_time, end_time, price, language_version, status, create_time, update_time)
         VALUES (#{movieId}, #{hallId}, #{startTime}, #{endTime}, #{price}, #{languageVersion}, #{status}, #{createTime}, #{updateTime})
     </insert>
+    <update id="updateSessions">
+        UPDATE session
+        SET movie_id = #{movieId},
+            hall_id = #{hallId},
+            start_time = #{startTime},
+            end_time = #{endTime},
+            price = #{price},
+            language_version = #{languageVersion},
+            status = #{status},
+            update_time = #{updateTime}
+        WHERE id = #{id}
+    </update>
     <select id="getSessionPage" resultType="com.example.movie.dto.SessionDTO">
         SELECT
         s.id,

@@ -22,5 +22,5 @@ public interface HallService {
 
     void deleteHall(Long id);
 
-    List<String> getHallName();
+    List<HallDTO> getHallName();
 }

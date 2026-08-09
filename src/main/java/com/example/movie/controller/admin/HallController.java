@@ -34,11 +34,11 @@ public class HallController {
         return Result.success(pageResult);
     }
 
-    @GetMapping("/name")
-    @ApiOperation("查询影厅名，用于前端回显")
+    @GetMapping("/idname")
+    @ApiOperation("查询影厅名id，用于前端回显")
     public Result getHallName() {
-        log.info("查询影厅名");
-        List<String> list = hallService.getHallName();
+        log.info("查询影厅名id");
+        List<HallDTO> list = hallService.getHallName();
         return Result.success(list);
     }
 

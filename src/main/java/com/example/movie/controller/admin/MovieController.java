@@ -6,11 +6,11 @@ import com.example.movie.dto.MovieDTO;
 import com.example.movie.dto.MoviePageQueryDTO;
 import com.example.movie.dto.MovieUtilsDTO;
 import com.example.movie.service.MovieService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.annotations.Api;
 
 import java.util.List;
 
@@ -34,6 +34,15 @@ public class MovieController {
         PageResult pageResult = movieService.getMoviePage(PageQueryDTO);
         return Result.success(pageResult);
     }
+
+    @GetMapping("/idname")
+    @ApiOperation("查询电影名跟id")
+    public Result getMovieidName() {
+        log.info("查询影厅名");
+        List<MovieDTO> list = movieService.getMovieidName();
+        return Result.success(list);
+    }
+
 
     @PostMapping
     @ApiOperation("添加电影")

@@ -12,10 +12,16 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     //处理异常
-    @ExceptionHandler
-    public Result ex(Exception e){//方法形参中指定能够处理的异常类型
-        e.printStackTrace();//打印堆栈中的异常信息
-        //捕获到异常之后，响应一个标准的Result
+    // 1. 专门捕获 RuntimeException（你手动throw的业务提示）
+    @ExceptionHandler(RuntimeException.class)
+    public Result<?> handleRuntimeException(RuntimeException e) {
+        e.printStackTrace();
+        return Result.error(e.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public Result<?> handleAllException(Exception e) {
+        e.printStackTrace();
         return Result.error("对不起,操作失败,请联系管理员");
     }
 }

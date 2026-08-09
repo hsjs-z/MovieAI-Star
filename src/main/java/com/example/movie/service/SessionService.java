@@ -1,8 +1,10 @@
 package com.example.movie.service;
 
 import com.example.movie.common.result.PageResult;
-import com.example.movie.dto.*;
-import org.apache.ibatis.annotations.Delete;
+import com.example.movie.dto.SessionAddDTO;
+import com.example.movie.dto.SessionDetailDTO;
+import com.example.movie.dto.SessionPageQueryDTO;
+import com.example.movie.dto.SoldSeatDTO;
 
 import java.util.List;
 
@@ -20,7 +22,7 @@ public interface SessionService {
 
     void updateSession(SessionAddDTO sessionaddDTO);
 
-    void updaStatus(Integer status, Long id);
+    void updaStatus(Long id, Integer status);
 
     void deleteSession(Long id);
 

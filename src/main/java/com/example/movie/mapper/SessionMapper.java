@@ -28,7 +28,6 @@ public interface SessionMapper {
     Session getById(Long id);
 
     @Update("update session set status = #{status} where id = #{id}")
-
     void updateSession(Session session);
 
 
@@ -73,4 +72,6 @@ public interface SessionMapper {
             "WHERE oi.session_id = #{sessionId} " +
             "AND o.status NOT IN (2, 3)")
     int likeOrderCount(Long id);
+
+    void updateSessions(Session session);
 }
