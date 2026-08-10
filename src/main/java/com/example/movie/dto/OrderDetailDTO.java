@@ -18,6 +18,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+//获取订单详细dto
 public class OrderDetailDTO {
     private Long orderId;
     private String orderNo;

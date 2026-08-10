@@ -13,4 +13,6 @@ public interface NoticeService {
     void addNotice(Notice notice);
     void updateNotice(Notice notice);
     void deleteNotice(Long id);
+
+    Notice idselNotice(Long id);
 }

@@ -16,7 +16,7 @@ public interface OrderService {
 
     void payOrder(Long id);
 
-    void delOrder(Long id);
+    void beOrder(Long id);
 
     OrderDetailDTO getOrderDetail(Long id);
 }

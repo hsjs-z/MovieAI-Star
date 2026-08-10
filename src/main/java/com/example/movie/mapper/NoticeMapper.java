@@ -24,5 +24,5 @@ public interface NoticeMapper {
     void updateById(Notice notice);
 
     @Delete("delete from notice where id = #{id}")
-    int deleteById(Long id);
+    void deleteById(Long id);
 }

@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+//获取分页dto
 public class OrderDTO {
     private Long id;
     private String orderNo;

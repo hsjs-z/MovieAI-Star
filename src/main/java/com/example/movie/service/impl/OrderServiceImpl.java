@@ -78,7 +78,7 @@ public class OrderServiceImpl implements OrderService {
      * @param id
      */
     @Transactional
-    public void delOrder(Long id) {
+    public void beOrder(Long id) {
         Order order = orderMapper.getById(id);
         if (order.getStatus() != 1){
             throw new RuntimeException("只有已支付订单才能退款");

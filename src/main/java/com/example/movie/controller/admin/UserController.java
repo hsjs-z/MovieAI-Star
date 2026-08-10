@@ -49,11 +49,11 @@ public class UserController {
         return Result.success();
     }
 
-    @PutMapping("/status/{status}")
+    @PutMapping("/status/{id}/{status}")
     @ApiOperation("修改用户状态")
-    public Result updateUserStatus(@PathVariable Integer status, Long id){
-        log.info("修改用户状态{}{}",status,id);
-        userService.updateUserStatus(status,id);
+    public Result updateUserStatus(@PathVariable Long id,@PathVariable Integer status){
+        log.info("修改用户状态{}{}",id,status);
+        userService.updateUserStatus(id,status);
         return Result.success();
     }
 

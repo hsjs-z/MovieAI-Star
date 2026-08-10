@@ -49,10 +49,6 @@ public class NoticeServiceImpl implements NoticeService {
      */
     @Override
     public void updateNotice(Notice notice) {
-        Notice exist = noticeMapper.selectById(notice.getId());
-        if (exist == null) {
-            throw new RuntimeException("公告不存在");
-        }
         notice.setUpdateTime(LocalDateTime.now());
         noticeMapper.updateById(notice);
     }
@@ -62,9 +58,23 @@ public class NoticeServiceImpl implements NoticeService {
      * @param id
      */
     public void deleteNotice(Long id) {
-        int rows = noticeMapper.deleteById(id);
-        if (rows == 0) {
+        Notice notice = noticeMapper.selectById(id);
+        if (notice == null) {
             throw new RuntimeException("公告不存在或已被删除");
         }
+        noticeMapper.deleteById(id);
+    }
+
+    /**
+     * 根据id查询公告
+     * @param id
+     * @return
+     */
+    public Notice idselNotice(Long id) {
+        Notice exist = noticeMapper.selectById(id);
+        if (exist == null) {
+            throw new RuntimeException("公告不存在");
+        }
+        return exist;
     }
 }

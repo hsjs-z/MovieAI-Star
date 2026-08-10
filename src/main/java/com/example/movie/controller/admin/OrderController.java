@@ -4,7 +4,6 @@ import com.example.movie.common.result.PageResult;
 import com.example.movie.common.result.Result;
 import com.example.movie.dto.OrderDetailDTO;
 import com.example.movie.dto.OrderPageQueryDTO;
-import com.example.movie.mapper.OrderMapper;
 import com.example.movie.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -57,11 +56,11 @@ public class OrderController {
         return Result.success();
     }
 
-    @PutMapping("/del/{id}")
-    @ApiOperation("删除订单")
-    public Result delOrder(@PathVariable Long id) {
-        log.info("删除订单{}", id);
-        orderService.delOrder(id);
+    @PutMapping("/be/{id}")
+    @ApiOperation("订单退款")
+    public Result beOrder(@PathVariable Long id) {
+        log.info("订单退款{}", id);
+        orderService.beOrder(id);
         return Result.success();
     }
 

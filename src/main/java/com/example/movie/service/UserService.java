@@ -17,7 +17,7 @@ public interface UserService {
 
     void updateUser(UserDTO dto);
 
-    void updateUserStatus(Integer status, Long id);
+    void updateUserStatus(Long id, Integer status);
 
     void updatepassword(Long id);
 

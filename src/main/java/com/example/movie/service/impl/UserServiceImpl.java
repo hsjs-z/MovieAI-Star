@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * @param dto
+     * 分页
      * @return
      */
     public PageResult getUser(UserPageQueryDTO dto) {
@@ -44,6 +45,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * @param id
+     * 根据id查询用户信息
      * @return
      */
     public UserDTO getById(Long id) {
@@ -58,6 +60,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * @param dto
+     * 新增用户
      */
     @Transactional
     public void updateUser(UserDTO dto) {
@@ -73,8 +76,9 @@ public class UserServiceImpl implements UserService {
     /**
      * @param status
      * @param id
+     * 修改用户状态
      */
-    public void updateUserStatus(Integer status, Long id) {
+    public void updateUserStatus(Long id, Integer status) {
         if (status == null || id == null) {
             throw new RuntimeException("用户状态或用户ID不能为空");
         }
@@ -100,7 +104,16 @@ public class UserServiceImpl implements UserService {
      * 删除用户
      */
     public void deleteUser(Long id) {
+        //管理员不能删除
+        User user = userMapper.getById(id);
+        if (user.getUsername().equals("admin")) {
+            throw new RuntimeException("管理员不能被删除");
+        }
         //如有订单在 用户不能删除
+        int count =  orderMapper.selUser(id);
+        if (count > 0) {
+            throw new RuntimeException("该用户有订单，不能删除");
+        }
         userMapper.deleteUserById(id);
     }
 

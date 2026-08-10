@@ -19,7 +19,7 @@
         select * from user
         <where>
             <if test="username != null and username != ''">
-                and name like concat('%',#{username},'%')
+                and username like concat('%',#{username},'%')
             </if>
             <if test="phone != null and phone != ''">
                 and phone = #{phone}

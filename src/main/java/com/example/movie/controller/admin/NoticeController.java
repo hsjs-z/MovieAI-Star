@@ -41,17 +41,26 @@ public class NoticeController {
         return Result.success();
     }
 
-    // 编辑
+    // 据id回显
+    @GetMapping("/{id}")
+    @ApiOperation("据id回显")
+    public Result idselNotice(@PathVariable Long id) {
+        log.info("据id回显{}", id);
+        Notice notice =  noticeService.idselNotice(id);
+        return Result.success(notice);
+    }
+
+    // 修改
     @PutMapping
-    @ApiOperation("编辑公告")
+    @ApiOperation("修改公告")
     public Result update(@RequestBody Notice notice) {
-        log.info("编辑公告{}", notice);
+        log.info("修改公告{}", notice);
         noticeService.updateNotice(notice);
         return Result.success();
     }
 
     // 删除
-    @PutMapping("/{id}")
+    @DeleteMapping("/{id}")
     @ApiOperation("删除公告")
     public Result delete(@PathVariable Long id) {
         log.info("删除公告{}", id);

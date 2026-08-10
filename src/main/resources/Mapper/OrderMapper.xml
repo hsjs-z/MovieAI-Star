@@ -4,13 +4,15 @@
 <mapper namespace="com.example.movie.mapper.OrderMapper">
     <update id="updateById">
         UPDATE `order`
-        SET status = #{status},
-        <if test="payTime != null">
-            pay_time = #{payTime},
-        </if>
-        <if test="refundTime != null">
-            refund_time = #{refundTime}
-        </if>
+        <trim prefix="SET" suffixOverrides=",">
+            status = #{status},
+            <if test="payTime != null">
+                pay_time = #{payTime},
+            </if>
+            <if test="refundTime != null">
+                refund_time = #{refundTime}
+            </if>
+        </trim>
         WHERE id = #{id}
     </update>
     <select id="getPageOrder" resultType="com.example.movie.dto.OrderDTO">
@@ -28,8 +30,8 @@
             <if test="orderNo != null and orderNo != ''">
                 AND o.order_no LIKE CONCAT('%', #{orderNo}, '%')
             </if>
-            <if test="userId != null">
-                AND o.user_id = #{userId}
+            <if test="username != null">
+                AND u.username LIKE CONCAT('%', #{username}, '%')
             </if>
             <if test="status != null">
                 AND o.status = #{status}
