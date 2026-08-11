@@ -9,6 +9,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+
 /**
  * 作者: 枷
  * 时间:2026/7/29 上午11:39
@@ -31,4 +33,11 @@ public interface UserMapper {
 
     @Delete("delete from user where id = #{id}")
     void deleteUserById(Long id);
+
+    User searUser(String username);
+
+    @Select("select * from user")
+    List<User> getOnly();
+
+    void insertUser(User user);
 }

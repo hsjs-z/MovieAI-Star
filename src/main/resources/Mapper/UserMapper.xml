@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.movie.mapper.UserMapper">
+    <insert id="insertUser">
+        insert into user(username,password,phone,avatar,create_time,update_time)
+        values(#{username},#{password},#{phone},#{avatar},now(),now())
+    </insert>
     <update id="updateUser">
         update user
         <set>
@@ -28,5 +32,8 @@
                 and status = #{status}
             </if>
         </where>
+    </select>
+    <select id="searUser" resultType="com.example.movie.entity.User">
+        select * from user where username = #{username}
     </select>
 </mapper>

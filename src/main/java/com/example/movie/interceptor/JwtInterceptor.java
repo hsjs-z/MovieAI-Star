@@ -1,8 +1,6 @@
 package com.example.movie.interceptor;
 
 import com.example.movie.Utils.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +28,7 @@ public class JwtInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 放行登录、注册接口，不需要token
         String uri = request.getRequestURI();
+        System.out.println("====进入拦截器，uri：" + uri);
         if (uri.contains("/login") || uri.contains("/register")) {
             return true;
         }

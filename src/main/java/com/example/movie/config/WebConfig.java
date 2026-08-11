@@ -1,10 +1,5 @@
 package com.example.movie.config;
 
-import com.example.movie.interceptor.JwtInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -12,12 +7,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * 时间:2026/8/3 上午10:37
  * 描述:。。。
  */
-@Configuration
+//@Configuration
 public class WebConfig implements WebMvcConfigurer {
 
 //    @Autowired
 //    private JwtInterceptor jwtInterceptor;
-////11111
     /**
      * 注册拦截器
      * @param registry

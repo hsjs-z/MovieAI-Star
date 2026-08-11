@@ -12,12 +12,14 @@ import com.example.movie.service.UserService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 作者: 枷
@@ -137,5 +139,32 @@ public class UserServiceImpl implements UserService {
         }
 
         return dto;
+    }
+
+    /**
+     * 注册用户
+     * @param user
+     */
+    public void newUser(User user) {
+        List<User> getu =  userMapper.getOnly();
+        if (getu.size() != 0){
+            for (User u : getu) {
+                if (u.getUsername().equals(user.getUsername())) {
+                    throw new RuntimeException("用户名已存在");
+                }
+                if (u.getPhone().equals(user.getPassword())){
+                    throw new RuntimeException("手机号已存在");
+                }
+            }
+
+            //加密
+            String bc = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+            user.setPassword(bc);
+
+            user.setRole(1);
+            user.setStatus(1);
+
+            userMapper.insertUser(user);
+        }
     }
 }
