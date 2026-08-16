@@ -13,6 +13,7 @@ import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +35,7 @@ public class MovieServiceImpl implements MovieService {
 
     /**
      * 根据条件查询电影分页列表
+     *
      * @param pageQueryDTO
      * @return
      */
@@ -43,6 +45,7 @@ public class MovieServiceImpl implements MovieService {
         return new PageResult(page.getTotal(), page.getResult());
     }
 
+    @CacheEvict(value = "homeMovieList", allEntries = true)
     /**
      * 添加电影
      * @param movieDTO
@@ -60,8 +63,10 @@ public class MovieServiceImpl implements MovieService {
 
         movieMapper.addMovie(movie);
     }
+
     /**
      * 根据id查询电影
+     *
      * @param id
      * @return
      */
@@ -75,6 +80,7 @@ public class MovieServiceImpl implements MovieService {
         return movieDTO;
     }
 
+    @CacheEvict(value = "homeMovieList", allEntries = true)
     /**
      * 根据id数组删除电影
      * @param ids
@@ -86,11 +92,16 @@ public class MovieServiceImpl implements MovieService {
             if (movie.getStatus() == 1) {
                 throw new RuntimeException("电影放映中，不能删除");
             }
+
+            Integer count = sessionMapper.getSession(id);
+            if (count > 0) {
+                throw new RuntimeException("电影有排片，不能删除");
+            }
         }
         movieMapper.delMovie(ids);
     }
 
-
+    @CacheEvict(value = "homeMovieList", allEntries = true)
     /**
      * 修改电影
      * @param movieDTO
@@ -104,6 +115,7 @@ public class MovieServiceImpl implements MovieService {
 
     /**
      * 根据电影id查询影院
+     *
      * @param movieId
      * @return
      */
@@ -120,6 +132,7 @@ public class MovieServiceImpl implements MovieService {
 
     /**
      * 查询电影名称id
+     *
      * @return
      */
     public List<MovieDTO> getMovieidName() {
@@ -129,12 +142,17 @@ public class MovieServiceImpl implements MovieService {
 
     /**
      * 据id改成在映
+     *
      * @param id
      */
-    public void updaById(Long id) {
+    public void updaById(Long id, Integer status) {
         Movie movie = movieMapper.getMovieById(id);
         if (movie.getStatus() == 2) {
             movie.setStatus(1);
+            movie.setUpdateTime(LocalDateTime.now());
+            movieMapper.updateMovie(movie);
+        } else {
+            movie.setStatus(status);
             movie.setUpdateTime(LocalDateTime.now());
             movieMapper.updateMovie(movie);
         }

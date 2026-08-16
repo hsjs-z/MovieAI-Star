@@ -26,7 +26,6 @@ import java.util.List;
 public class MovieController {
     @Autowired
     private MovieService movieService;
-
     @GetMapping
     @ApiOperation("条件查询电影")
     public Result getMovie(MoviePageQueryDTO PageQueryDTO) {
@@ -60,11 +59,11 @@ public class MovieController {
         return Result.success(movieDTO);
     }
 
-    @GetMapping("/kal/{id}")
-    @ApiOperation("在映按钮 根据id更改电影信息")
-    public Result updaById(@PathVariable Long id) {
-        log.info("查询在映{}", id);
-        movieService.updaById(id);
+    @GetMapping("/status/{id}/{status}")
+    @ApiOperation("根据id更改电影状态")
+    public Result updaById(@PathVariable Long id, @PathVariable Integer status) {
+        log.info("查询在映{}  {}", id ,status);
+        movieService.updaById(id,status);
         return Result.success();
     }
 

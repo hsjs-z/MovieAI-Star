@@ -6,3 +6,8 @@ sky:
     database: movie_system
     username: root
     password: REDACTED
+  redis:
+    host: localhost
+    port: 6379
+    password:
+    database: 8

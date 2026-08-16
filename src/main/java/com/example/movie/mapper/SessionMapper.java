@@ -74,4 +74,6 @@ public interface SessionMapper {
     int likeOrderCount(Long id);
 
     void updateSessions(Session session);
+
+    Integer getSession(Long id);
 }

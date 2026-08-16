@@ -7,6 +7,7 @@ import com.example.movie.service.NoticeService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -33,6 +34,8 @@ public class NoticeServiceImpl implements NoticeService {
         return new PageResult(pages.getTotal(), pages.getResult());
     }
 
+
+    @CacheEvict(value = "noticeList", allEntries = true)
     /**
      * 添加公告
      * @param notice
@@ -43,6 +46,7 @@ public class NoticeServiceImpl implements NoticeService {
         noticeMapper.insert(notice);
     }
 
+    @CacheEvict(value = "noticeList", allEntries = true)
     /**
      * 编辑公告
      * @param notice
@@ -53,6 +57,7 @@ public class NoticeServiceImpl implements NoticeService {
         noticeMapper.updateById(notice);
     }
 
+    @CacheEvict(value = "noticeList", allEntries = true)
     /**
      * 删除公告
      * @param id
@@ -76,5 +81,23 @@ public class NoticeServiceImpl implements NoticeService {
             throw new RuntimeException("公告不存在");
         }
         return exist;
+    }
+
+    @CacheEvict(value = "noticeList", allEntries = true)
+    /**
+     * 修改公告状态
+     * @param id
+     * @param status
+     */
+    public void updaSta(Long id, Integer status) {
+        if (id == null) {
+            throw new RuntimeException("id不能为空");
+        }
+        if (status == null) {
+            throw new RuntimeException("状态不能为空");
+        }
+        Notice notice = noticeMapper.selectById(id);
+        notice.setStatus(status);
+        noticeMapper.updateById(notice);
     }
 }

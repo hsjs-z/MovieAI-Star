@@ -2,6 +2,7 @@ package com.example.movie.bedto;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -10,7 +11,8 @@ import java.math.BigDecimal;
  * 描述:首页展示电影
  */
 @Data
-public class SearMovie {
+public class SearMovie implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Long id;
     private String name;
     private String posterUrl;

@@ -18,7 +18,7 @@
     <description>movie system</description>
 
     <properties>
-        <java.version>17</java.version>                      <!-- 务必改为 17，若用 21 会报错 -->
+        <java.version>17</java.version>
         <mybatis-plus.version>3.5.1</mybatis-plus.version>
         <knife4j.version>3.0.2</knife4j.version>
         <pagehelper.version>1.3.0</pagehelper.version>
@@ -145,6 +145,18 @@
             <artifactId>jjwt-jackson</artifactId>
             <version>0.11.5</version>
             <scope>runtime</scope>
+        </dependency>
+
+        <!-- 缓存抽象 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+
+        <!-- Redis 实现 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
 

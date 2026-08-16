@@ -67,4 +67,14 @@ public class NoticeController {
         noticeService.deleteNotice(id);
         return Result.success();
     }
+
+    @PutMapping("/status/{id}/{status}")
+    @ApiOperation("修改公告状态")
+    public Result updaSta(@PathVariable Long id, @PathVariable Integer status) {
+        log.info("修改公告状态{}  {}", id, status);
+        noticeService.updaSta(id,status);
+        return Result.success();
+    }
+
+
 }

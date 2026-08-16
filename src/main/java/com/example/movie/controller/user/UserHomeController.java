@@ -1,6 +1,9 @@
 package com.example.movie.controller.user;
 
-import com.example.movie.bedto.*;
+import com.example.movie.bedto.CinemaSession;
+import com.example.movie.bedto.HallPlus;
+import com.example.movie.bedto.SearMovie;
+import com.example.movie.bedto.Trailer;
 import com.example.movie.common.result.Result;
 import com.example.movie.service.UserHomeService;
 import io.swagger.annotations.Api;

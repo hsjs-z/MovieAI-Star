@@ -9,6 +9,7 @@
         update notice set
                       <if test="title != null">title = #{title},</if>
                       <if test="content != null">content = #{content},</if>
+                      <if test="status != null">status = #{status},</if>
                                   update_time = #{updateTime}
                            where id = #{id}
     </update>

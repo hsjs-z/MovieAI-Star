@@ -25,4 +25,5 @@ public class Notice {
     private String content;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
+    private Integer status;
 }

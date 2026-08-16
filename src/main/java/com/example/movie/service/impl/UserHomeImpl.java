@@ -10,6 +10,7 @@ import com.example.movie.service.UserHomeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class UserHomeImpl implements UserHomeService {
     @Autowired
     private UserHomeMapper uhMapper;
 
+    @Cacheable(value = "homeMovieList", key = "'home'")
     /**
      * 首页电影
      * @return
@@ -42,6 +44,7 @@ public class UserHomeImpl implements UserHomeService {
         return searMovie;
     }
 
+    @Cacheable(value = "homeMovieList", key = "'homeTrailer'")
     /**
      * 首页预告
      *
@@ -59,8 +62,9 @@ public class UserHomeImpl implements UserHomeService {
         return searMovie;
     }
 
+    @Cacheable(value = "homeMovieList", key = "'homeTop100'")
     /**
-     * 首页热门
+     * 首页热门100
      * @return
      */
     public List<SearMovie> homeTop100() {

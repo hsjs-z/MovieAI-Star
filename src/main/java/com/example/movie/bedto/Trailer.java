@@ -3,6 +3,7 @@ package com.example.movie.bedto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -12,7 +13,8 @@ import java.time.LocalDate;
  * 描述:。。。
  */
 @Data
-public class Trailer {
+public class Trailer implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Long id;
     private String name;
     private String posterUrl;

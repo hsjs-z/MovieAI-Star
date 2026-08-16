@@ -15,4 +15,6 @@ public interface NoticeService {
     void deleteNotice(Long id);
 
     Notice idselNotice(Long id);
+
+    void updaSta(Long id, Integer status);
 }

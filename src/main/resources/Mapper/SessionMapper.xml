@@ -68,4 +68,9 @@
         AND start_time &lt; #{endTime}
           AND end_time &gt; #{startTime}
     </select>
+    <select id="getSession" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM session
+        WHERE movie_id = #{id}
+          AND status = 1
+    </select>
 </mapper>

@@ -12,6 +12,8 @@ import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -41,6 +43,7 @@ public class HallServiceImpl implements HallService {
         return new PageResult(page.getTotal(), page.getResult());
     }
 
+    @CacheEvict(value = "hallList", allEntries = true)
     /**
      * 添加影厅
      * @param hallDTO
@@ -72,6 +75,7 @@ public class HallServiceImpl implements HallService {
         return hallDTO;
     }
 
+    @CacheEvict(value = "hallList", allEntries = true)
     /**
      * 删除影厅
      * @param id
@@ -95,6 +99,7 @@ public class HallServiceImpl implements HallService {
         return list;
     }
 
+    @Cacheable(value = "hallList", key = "'getcountHall'")
     /**
      * 返回影厅
      * @return
@@ -104,6 +109,7 @@ public class HallServiceImpl implements HallService {
         return hall;
     }
 
+    @CacheEvict(value = "hallList", allEntries = true)
     /**
      * 修改影厅
      * @param hallDTO
