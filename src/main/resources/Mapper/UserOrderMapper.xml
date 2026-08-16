@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.movie.mapper.UserOrderMapper">
+    <select id="getOrderList" resultType="com.example.movie.bedto.UserOrderListDTO">
+        SELECT
+            o.id AS orderId,
+            o.order_no AS orderNo,
+            m.name AS movieName,
+            m.poster_url AS posterUrl,
+            h.name AS hallName,
+            h.location,
+            s.start_time AS startTime,
+            o.total_price AS totalPrice,
+            o.status,
+            o.create_time AS createTime
+        FROM `order` o
+                 JOIN order_item oi ON oi.order_id = o.id
+                 JOIN session s ON s.id = oi.session_id
+                 JOIN movie m ON m.id = s.movie_id
+                 JOIN hall h ON h.id = s.hall_id
+        WHERE o.user_id = #{userId}
+        GROUP BY o.id, o.order_no, m.name, m.poster_url, h.name, h.location, s.start_time, o.total_price, o.status, o.create_time
+        ORDER BY o.create_time DESC;
+    </select>
+    <select id="selectOrderDetailByOrderNo" resultType="com.example.movie.bedto.OrderDetailRawDTO">
+        SELECT
+            o.id AS orderId,
+            o.order_no AS orderNo,
+            o.total_price AS totalPrice,
+            o.status,
+            o.create_time AS createTime,
+            o.pay_time AS payTime,
+            m.name AS movieName,
+            m.poster_url AS posterUrl,
+            h.name AS hallName,
+            h.location,
+            s.start_time AS startTime,
+            s.end_time AS endTime,
+            s.language_version AS languageVersion,
+            oi.seat_row AS seatRow,
+            oi.seat_col AS seatCol,
+            oi.price AS ticketPrice
+        FROM `order` o
+                 JOIN order_item oi ON oi.order_id = o.id
+                 JOIN session s ON s.id = oi.session_id
+                 JOIN movie m ON m.id = s.movie_id
+                 JOIN hall h ON h.id = s.hall_id
+        WHERE o.order_no = #{orderNo}
+          AND o.user_id = #{userId}
+    </select>
+</mapper>

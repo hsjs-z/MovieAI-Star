@@ -26,4 +26,6 @@ public interface MovieService {
     List<MovieUtilsDTO> getCinemasByMovie(Long movieId);
 
     List<MovieDTO> getMovieidName();
+
+    void updaById(Long id);
 }

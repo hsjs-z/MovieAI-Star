@@ -1,39 +1,41 @@
 package com.example.movie.interceptor;
 
 import com.example.movie.Utils.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * 作者: 枷
- * 时间:2026/8/3 上午10:41
- * 描述:拦截器，校验token合法性
- */ //16 19
-//@Component
+@Component
+@Slf4j
 public class JwtInterceptor implements HandlerInterceptor {
 
-//    @Autowired
+    @Autowired
     private JwtUtil jwtUtil;
 
-    /**
-     * 拦截器，校验token合法性
-     * @param request
-     * @param response
-     * @param handler
-     * @return
-     * @throws Exception
-     */
+    @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // 放行登录、注册接口，不需要token
         String uri = request.getRequestURI();
-        System.out.println("====进入拦截器，uri：" + uri);
-        if (uri.contains("/login") || uri.contains("/register")) {
+        log.info("====进入拦截器，uri：{}", uri);
+
+
+        // 放行登录 注册 上传等公共接口
+        if (uri.contains("/login") || uri.contains("/register") || uri.contains("/upload")) {
             return true;
         }
 
-        // 获取请求头token
+        // 放行的都是数据 输入网址并不会跳到对应页面
+        if (uri.startsWith("/plus") ||
+                uri.startsWith("/session/seats") || uri.startsWith("/hall/plus") ||
+                uri.equals("/hall/counts") ||
+                uri.startsWith("/movie/")) {
+            return true;
+        }
+
+        // 以下接口需要登录，执行 token 校验
         String header = request.getHeader("Authorization");
         if (header == null || !header.startsWith("Bearer ")) {
             response.setContentType("application/json;charset=utf-8");
@@ -41,17 +43,46 @@ public class JwtInterceptor implements HandlerInterceptor {
             return false;
         }
         String token = header.substring(7);
-
-        // 校验token合法性
         if (!jwtUtil.validateToken(token)) {
             response.setContentType("application/json;charset=utf-8");
             response.getWriter().write("{\"code\":401,\"msg\":\"登录失效，请重新登录\"}");
             return false;
         }
 
-        // 解析用户id存入request，接口可直接获取当前登录用户
+        // 解析用户id、角色（0=管理员，1=普通用户）
         Long userId = jwtUtil.getUserId(token);
+        Integer role = jwtUtil.getRole(token);
         request.setAttribute("currentUserId", userId);
+        request.setAttribute("currentRole", role);
+
+        // 用户端订单接口特殊处理
+        if (uri.equals("/order/create") || uri.equals("/order/pay")) {
+            if (role == null || role != 1) {
+                response.setContentType("application/json;charset=utf-8");
+                response.setStatus(403);
+                response.getWriter().write("{\"code\":403,\"msg\":\"权限不足：仅普通用户可访问用户端页面\"}");
+                return false;
+            }
+            return true;
+        }
+
+        // 通用角色判断
+        if (uri.startsWith("/users")) {
+            if (role == null || role != 1) {
+                response.setContentType("application/json;charset=utf-8");
+                response.setStatus(403);
+                response.getWriter().write("{\"code\":403,\"msg\":\"权限不足：仅普通用户可访问用户端页面\"}");
+                return false;
+            }
+        } else {
+            if (role == null || role != 0) {
+                response.setContentType("application/json;charset=utf-8");
+                response.setStatus(403);
+                response.getWriter().write("{\"code\":403,\"msg\":\"权限不足：仅管理员可访问管理后台\"}");
+                return false;
+            }
+        }
+
         return true;
     }
 }

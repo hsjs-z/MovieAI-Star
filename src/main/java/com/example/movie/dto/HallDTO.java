@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 /**
  * 作者: 枷
  * 时间:2026/7/25 下午10:57
@@ -22,6 +20,12 @@ public class HallDTO {
 
     /** 影厅名称（如：1号厅、IMAX厅） */
     private String name;
+
+    /** 座位排数 */
+    private Integer rowNum;
+
+    /** 座位列数 */
+    private Integer colNum;
 
     /** 座位总数 */
     private Integer capacity;

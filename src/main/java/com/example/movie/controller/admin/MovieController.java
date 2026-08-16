@@ -60,6 +60,14 @@ public class MovieController {
         return Result.success(movieDTO);
     }
 
+    @GetMapping("/kal/{id}")
+    @ApiOperation("在映按钮 根据id更改电影信息")
+    public Result updaById(@PathVariable Long id) {
+        log.info("查询在映{}", id);
+        movieService.updaById(id);
+        return Result.success();
+    }
+
     @PutMapping
     @ApiOperation("修改按钮")
     public Result updateMovie(@RequestBody MovieDTO movieDTO) {

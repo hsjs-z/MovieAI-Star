@@ -24,4 +24,6 @@ public interface UserService {
     void deleteUser(Long id);
 
     UserDetailDTO getUserDetail(Long userId);
+
+    void updateUserUrl(Long userId, String avatar);
 }

@@ -48,4 +48,12 @@ public interface OrderMapper {
             "WHERE DATE(create_time) = CURDATE() " +
             "GROUP BY status")
     List<OrderStatusCountDTO> selectTodayOrderStatus();
+
+    void insert(Order order);
+
+    @Select("select * from `order` where order_no = #{orderNo}")
+    Order updaOrder(String orderNo);
+
+    @Select("select * from `order` where order_no = #{orderNo}")
+    Order getTest(String orderNo);
 }

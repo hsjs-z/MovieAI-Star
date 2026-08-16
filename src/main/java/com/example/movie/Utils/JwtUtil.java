@@ -3,6 +3,7 @@ package com.example.movie.Utils;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.crypto.SecretKey;
@@ -14,7 +15,7 @@ import java.util.Date;
  * 时间:2026/8/2 下午4:17
  * 描述:生成 解析 验证
  */
-//@Component
+@Component
 public class JwtUtil {
 
     @Value("${jwt.secret}")
@@ -36,15 +37,17 @@ public class JwtUtil {
      * 生成token
      * @param userId 用户id
      * @param username 用户名
+     * @param role 用户角色（0=管理院，1=普通用户）
      * @return jwt令牌
      */
-    public String generateToken(Long userId, String username) {
+    public String generateToken(Long userId, String username, Integer role) {
         long now = System.currentTimeMillis();
         Date expireDate = new Date(now + expireTime);
 
         return Jwts.builder()
                 .setSubject(userId.toString()) // 主题：用户id
-                .claim("username", username)   // 自定义载荷
+                .claim("username", username)   // 自定义载荷：用户名
+                .claim("role", role)           // 自定义载荷：角色（数字）
                 .setIssuedAt(new Date(now))    // 签发时间
                 .setExpiration(expireDate)      // 过期时间
                 .signWith(secretKey, SignatureAlgorithm.HS256) // 加密
@@ -61,6 +64,18 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody();
         return Long.valueOf(claims.getSubject());
+    }
+
+    /**
+     * 解析token，获取用户角色
+     */
+    public Integer getRole(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.get("role", Integer.class);
     }
 
     /**

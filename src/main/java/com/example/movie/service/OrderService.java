@@ -1,8 +1,11 @@
 package com.example.movie.service;
 
+import com.example.movie.bedto.OrderCreateDTO;
 import com.example.movie.common.result.PageResult;
 import com.example.movie.dto.OrderDetailDTO;
 import com.example.movie.dto.OrderPageQueryDTO;
+
+import java.util.Map;
 
 /**
  * 作者: 枷
@@ -19,4 +22,8 @@ public interface OrderService {
     void beOrder(Long id);
 
     OrderDetailDTO getOrderDetail(Long id);
+
+    Map<String, Object> createOrder(OrderCreateDTO orderCreateDTO, Long userId);
+
+    void setOrder(String orderNo);
 }

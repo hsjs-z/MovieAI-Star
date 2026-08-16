@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.movie.mapper.OrderMapper">
+    <insert id="insert">
+        INSERT INTO `order` (order_no, user_id, total_price, status, create_time, update_time)
+        VALUES (#{orderNo}, #{userId}, #{totalPrice}, #{status}, #{createTime}, #{updateTime})
+    </insert>
     <update id="updateById">
         UPDATE `order`
         <trim prefix="SET" suffixOverrides=",">

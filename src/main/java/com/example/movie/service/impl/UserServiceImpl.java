@@ -98,7 +98,8 @@ public class UserServiceImpl implements UserService {
      */
     public void updatepassword(Long id) {
         User user = userMapper.getById(id);
-        user.setPassword("123456");
+        String password = BCrypt.hashpw("123456", BCrypt.gensalt());
+        user.setPassword(password);
         userMapper.updatepassword(user);
     }
 
@@ -139,6 +140,15 @@ public class UserServiceImpl implements UserService {
         }
 
         return dto;
+    }
+
+    /**
+     * 修改用户头像
+     * */
+    public void updateUserUrl(Long userId, String avatar) {
+        User user = userMapper.getById(userId);
+        user.setAvatar(avatar);
+        userMapper.updateUser(user);
     }
 
     /**

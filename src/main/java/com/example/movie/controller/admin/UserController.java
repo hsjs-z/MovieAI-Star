@@ -78,4 +78,11 @@ public class UserController {
         return Result.success(userService.getUserDetail(userId));
     }
 
+    @PostMapping("/Url")
+    @ApiOperation("修改用户头像")
+    public Result updateUserUrl(@RequestAttribute("currentUserId") Long userId,@RequestBody String avatar){
+        userService.updateUserUrl(userId,avatar);
+        return Result.success();
+    }
+
 }

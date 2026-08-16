@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.movie.mapper.UserHomeMapper">
+    <select id="plus" resultType="com.example.movie.bedto.CinemaSession">
+        SELECT
+            s.id AS sessionId,
+            s.start_time AS startTime,
+            s.end_time AS endTime,
+            s.price,
+            s.language_version AS languageVersion,
+            h.name,
+            h.capacity,
+            h.seat_layout AS seatLayout,
+            h.location
+        FROM session s
+                 JOIN hall h ON h.id = s.hall_id
+        WHERE s.movie_id = #{id} ORDER BY s.start_time ASC
+    </select>
+    <select id="getplus" resultType="com.example.movie.bedto.HallPlus">
+        SELECT s.id AS sessionId,
+               m.name AS movieName,
+               m.poster_url AS posterUrl,
+               h.name AS hallName,
+               h.location AS location,
+               s.start_time AS startTime,
+               s.end_time AS endTime,
+               s.price AS price,
+               s.language_version AS languageVersion,
+               h.seat_layout AS seatLayout,
+               h.capacity AS capacity
+        FROM session s
+                 JOIN movie m ON m.id = s.movie_id
+                 JOIN hall h ON h.id = s.hall_id
+        WHERE s.id = #{sessionId}
+    </select>
+</mapper>

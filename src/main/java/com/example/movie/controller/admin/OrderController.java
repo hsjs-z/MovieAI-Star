@@ -1,5 +1,6 @@
 package com.example.movie.controller.admin;
 
+import com.example.movie.bedto.OrderCreateDTO;
 import com.example.movie.common.result.PageResult;
 import com.example.movie.common.result.Result;
 import com.example.movie.dto.OrderDetailDTO;
@@ -10,6 +11,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * 作者: 枷
@@ -26,15 +29,15 @@ public class OrderController {
 
     @GetMapping
     @ApiOperation("分页查询订单")
-    public Result getOrderPage(OrderPageQueryDTO dto){
-        log.info("分页查询订单{}" , dto);
+    public Result getOrderPage(OrderPageQueryDTO dto) {
+        log.info("分页查询订单{}", dto);
         PageResult pageResult = orderService.getOrderPage(dto);
         return Result.success(pageResult);
     }
 
     @GetMapping("/{id}")
     @ApiOperation("查询订单详情")
-    public Result<OrderDetailDTO> getOrderDetail(@PathVariable Long id){
+    public Result<OrderDetailDTO> getOrderDetail(@PathVariable Long id) {
         log.info("查询订单详情{}", id);
         OrderDetailDTO orderDetail = orderService.getOrderDetail(id);
         return Result.success(orderDetail);
@@ -42,8 +45,8 @@ public class OrderController {
 
     @PutMapping("/{id}")
     @ApiOperation("取消订单")
-    public Result updateOrderStatus(@PathVariable Long id){
-        log.info("取消订单{}" , id);
+    public Result updateOrderStatus(@PathVariable Long id) {
+        log.info("取消订单{}", id);
         orderService.updateOrderStatus(id);
         return Result.success();
     }
@@ -61,6 +64,28 @@ public class OrderController {
     public Result beOrder(@PathVariable Long id) {
         log.info("订单退款{}", id);
         orderService.beOrder(id);
+        return Result.success();
+    }
+
+    @PostMapping("/create")
+    @ApiOperation("用户端 生成订单")
+    public Result<Map<String, Object>> createOrder(@RequestBody OrderCreateDTO orderCreateDTO, @RequestAttribute("currentUserId") Long userId) {
+        if (orderCreateDTO.getSessionId() == null) {
+            return Result.error("场次ID不能为空");
+        }
+        if (orderCreateDTO.getSeats() == null || orderCreateDTO.getSeats().isEmpty()) {
+            return Result.error("请至少选择一个座位");
+        }
+
+        Map<String, Object> result = orderService.createOrder(orderCreateDTO, userId);
+
+        return Result.success(result);
+    }
+
+    @GetMapping("/pay")
+    @ApiOperation("模拟支付")
+    public Result payOrder(@RequestParam String orderNo) {
+        orderService.setOrder(orderNo);
         return Result.success();
     }
 

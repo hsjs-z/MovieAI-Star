@@ -52,7 +52,9 @@ public class MovieServiceImpl implements MovieService {
         BeanUtils.copyProperties(movieDTO, movie);
         LocalDateTime now = LocalDateTime.now();
 
-        movie.setStatus(0);
+        movie.setStatus(2);
+        movie.setCountryCode(0);
+        movie.setLanguageCode(0);
         movie.setCreateTime(now);
         movie.setUpdateTime(now);
 
@@ -87,6 +89,8 @@ public class MovieServiceImpl implements MovieService {
         }
         movieMapper.delMovie(ids);
     }
+
+
     /**
      * 修改电影
      * @param movieDTO
@@ -121,5 +125,18 @@ public class MovieServiceImpl implements MovieService {
     public List<MovieDTO> getMovieidName() {
         List<MovieDTO> list = movieMapper.getMovieidName();
         return list;
+    }
+
+    /**
+     * 据id改成在映
+     * @param id
+     */
+    public void updaById(Long id) {
+        Movie movie = movieMapper.getMovieById(id);
+        if (movie.getStatus() == 2) {
+            movie.setStatus(1);
+            movie.setUpdateTime(LocalDateTime.now());
+            movieMapper.updateMovie(movie);
+        }
     }
 }

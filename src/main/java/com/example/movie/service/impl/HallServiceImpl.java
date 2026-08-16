@@ -49,6 +49,10 @@ public class HallServiceImpl implements HallService {
         Hall hall = new Hall();
         BeanUtils.copyProperties(hallDTO, hall);
 
+        // 生成 seat_layout JSON
+        String seatLayout = buildSeatLayout(hallDTO.getRowNum(), hallDTO.getColNum());
+        hall.setSeatLayout(seatLayout);
+
         hall.setCreateTime(LocalDateTime.now());
         hallMapper.addHall(hall);
     }
@@ -92,6 +96,15 @@ public class HallServiceImpl implements HallService {
     }
 
     /**
+     * 返回影厅
+     * @return
+     */
+    public List<Hall> getHallCon() {
+        List<Hall> hall = hallMapper.getHallCon();
+        return hall;
+    }
+
+    /**
      * 修改影厅
      * @param hallDTO
      */
@@ -108,5 +121,12 @@ public class HallServiceImpl implements HallService {
         Hall hall = new Hall();
         BeanUtils.copyProperties(hallDTO, hall);
         hallMapper.updateHall(hall);
+    }
+
+
+    private String buildSeatLayout(Integer rowNum, Integer colNum) {
+        int rows = (rowNum == null) ? 8 : rowNum;
+        int cols = (colNum == null) ? 10 : colNum;
+        return String.format("{\"rows\":%d,\"cols\":%d}", rows, cols);
     }
 }

@@ -3,6 +3,7 @@ package com.example.movie.service;
 import com.example.movie.common.result.PageResult;
 import com.example.movie.dto.HallDTO;
 import com.example.movie.dto.HallPageQueryDTO;
+import com.example.movie.entity.Hall;
 
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface HallService {
     void deleteHall(Long id);
 
     List<HallDTO> getHallName();
+
+    List<Hall> getHallCon();
 }

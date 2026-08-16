@@ -52,4 +52,6 @@ public interface MovieMapper {
 
     @Select("SELECT id,name FROM movie where status = 1")
     List<MovieDTO> getMovieidName();
+
+    List<MovieDTO> getMovieByIds(Long id);
 }

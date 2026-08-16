@@ -31,4 +31,7 @@ public interface HallMapper {
 
     @Select("select id,name from hall")
     List<HallDTO> gethallName();
+
+    @Select("select * from hall")
+    List<Hall> getHallCon();
 }

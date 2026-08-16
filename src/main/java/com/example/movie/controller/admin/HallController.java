@@ -4,6 +4,7 @@ import com.example.movie.common.result.PageResult;
 import com.example.movie.common.result.Result;
 import com.example.movie.dto.HallDTO;
 import com.example.movie.dto.HallPageQueryDTO;
+import com.example.movie.entity.Hall;
 import com.example.movie.service.HallService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -73,4 +74,12 @@ public class HallController {
         hallService.deleteHall(id);
         return Result.success();
     }
+
+    @GetMapping("/counts")
+    @ApiOperation("返回影厅")
+    public Result<List<Hall>> getcountHall() {
+        List<Hall> hall = hallService.getHallCon();
+        return Result.success(hall);
+    }
+
 }
