@@ -19,6 +19,12 @@
         </trim>
         WHERE id = #{id}
     </update>
+    <update id="cancelUnpaidOrders">
+        update `order`
+        set status = 2,
+            update_time = now()
+        where status = 0 and create_time &lt; #{time}
+    </update>
     <select id="getPageOrder" resultType="com.example.movie.dto.OrderDTO">
         SELECT o.id,
         o.order_no,

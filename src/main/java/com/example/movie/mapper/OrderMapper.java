@@ -6,6 +6,7 @@ import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -56,4 +57,6 @@ public interface OrderMapper {
 
     @Select("select * from `order` where order_no = #{orderNo}")
     Order getTest(String orderNo);
+
+    int cancelUnpaidOrders(LocalDateTime time);
 }

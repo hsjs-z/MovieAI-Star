@@ -18,6 +18,12 @@
             update_time = #{updateTime}
         WHERE id = #{id}
     </update>
+    <update id="ifsession">
+        UPDATE session
+        SET status = 2,
+            update_time = Now()
+        WHERE end_time &lt; #{time}
+    </update>
     <select id="getSessionPage" resultType="com.example.movie.dto.SessionDTO">
         SELECT
         s.id,

@@ -76,4 +76,6 @@ public interface SessionMapper {
     void updateSessions(Session session);
 
     Integer getSession(Long id);
+
+    int ifsession(LocalDateTime time);
 }
