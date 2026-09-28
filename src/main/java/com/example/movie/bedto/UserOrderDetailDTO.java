@@ -1,6 +1,6 @@
 package com.example.movie.bedto;
 
-import com.example.movie.TicketItemDTO;
+import com.example.movie.dto.TicketItemDTO;
 import lombok.Data;
 
 import java.math.BigDecimal;

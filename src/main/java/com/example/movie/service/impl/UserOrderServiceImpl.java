@@ -1,6 +1,6 @@
 package com.example.movie.service.impl;
 
-import com.example.movie.TicketItemDTO;
+import com.example.movie.dto.TicketItemDTO;
 import com.example.movie.bedto.OrderDetailRawDTO;
 import com.example.movie.bedto.UserOrderDetailDTO;
 import com.example.movie.bedto.UserOrderListDTO;

@@ -140,6 +140,7 @@ public class MovieServiceImpl implements MovieService {
         return list;
     }
 
+    @CacheEvict(value = "homeMovieList", allEntries = true)
     /**
      * 据id改成在映
      *

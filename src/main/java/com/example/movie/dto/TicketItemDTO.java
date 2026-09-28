@@ -1,4 +1,4 @@
-package com.example.movie;
+package com.example.movie.dto;
 
 import lombok.Data;
 
@@ -13,5 +13,5 @@ import java.math.BigDecimal;
 public class TicketItemDTO {
     private Integer seatRow;
     private Integer seatCol;
-    private BigDecimal price;        // 单张票价
+    private BigDecimal price;
 }
