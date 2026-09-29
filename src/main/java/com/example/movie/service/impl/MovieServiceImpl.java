@@ -56,8 +56,6 @@ public class MovieServiceImpl implements MovieService {
         LocalDateTime now = LocalDateTime.now();
 
         movie.setStatus(2);
-        movie.setCountryCode(0);
-        movie.setLanguageCode(0);
         movie.setCreateTime(now);
         movie.setUpdateTime(now);
 
