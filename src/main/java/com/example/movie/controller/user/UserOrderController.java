@@ -3,6 +3,7 @@ package com.example.movie.controller.user;
 import com.example.movie.bedto.UserOrderDetailDTO;
 import com.example.movie.bedto.UserOrderListDTO;
 import com.example.movie.common.result.Result;
+import com.example.movie.service.OrderService;
 import com.example.movie.service.UserOrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,6 +25,8 @@ import java.util.List;
 public class UserOrderController {
     @Autowired
     private UserOrderService userOrderService;
+    @Autowired
+    private OrderService orderService;
 
     @GetMapping
     @ApiOperation("获取用户订单列表")
@@ -38,6 +41,14 @@ public class UserOrderController {
                                                      @RequestAttribute("currentUserId") Long userId) {
         UserOrderDetailDTO detail = userOrderService.getUserOrder(orderNo, userId);
         return Result.success(detail);
+    }
+
+    @PostMapping("/cancel")
+    @ApiOperation("用户端 取消订单")
+    public Result cancelOrder(@RequestParam Long orderId,
+                               @RequestAttribute("currentUserId") Long currentUserId) {
+        orderService.cancelOrder(orderId, currentUserId);
+        return Result.success();
     }
 
 }

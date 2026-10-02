@@ -1,7 +1,6 @@
 package com.example.movie.service;
 
 import com.example.movie.bedto.CinemaSession;
-import com.example.movie.bedto.HallPlus;
 import com.example.movie.bedto.SearMovie;
 import com.example.movie.bedto.Trailer;
 
@@ -20,6 +19,4 @@ public interface UserHomeService {
     List<SearMovie> homeTop100();
 
     List<CinemaSession> plus(Long id);
-
-    HallPlus getplus(Long sessionId);
 }

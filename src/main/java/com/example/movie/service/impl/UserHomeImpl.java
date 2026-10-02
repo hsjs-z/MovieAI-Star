@@ -1,7 +1,6 @@
 package com.example.movie.service.impl;
 
 import com.example.movie.bedto.CinemaSession;
-import com.example.movie.bedto.HallPlus;
 import com.example.movie.bedto.SearMovie;
 import com.example.movie.bedto.Trailer;
 import com.example.movie.entity.Movie;
@@ -86,28 +85,5 @@ public class UserHomeImpl implements UserHomeService {
     public List<CinemaSession> plus(Long id) {
         List<CinemaSession> cs = uhMapper.plus(id);
         return cs;
-    }
-
-    /**
-     * 选座页面
-     * @param sessionId
-     * @return
-     */
-    public HallPlus getplus(Long sessionId) {
-        HallPlus dto = uhMapper.getplus(sessionId);
-
-        if (dto == null) {
-            throw new RuntimeException("场次不存在");
-        }
-
-        // 如果座位布局为空，根据容量生成默认布局
-        if (dto.getSeatLayout() == null || dto.getSeatLayout().isEmpty()) {
-            int capacity = dto.getCapacity();
-            int cols = 10;  // 默认10列
-            int rows = (int) Math.ceil(capacity * 1.0 / cols);  // 向上取整
-            dto.setSeatLayout("{\"rows\":" + rows + ", \"cols\":" + cols + "}");
-        }
-
-        return dto;
     }
 }

@@ -17,6 +17,8 @@ public interface OrderService {
 
     void updateOrderStatus(Long id);
 
+    void cancelOrder(Long id, Long currentUserId);
+
     void payOrder(Long id);
 
     void beOrder(Long id);

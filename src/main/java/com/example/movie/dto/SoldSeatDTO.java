@@ -1,6 +1,9 @@
 package com.example.movie.dto;
 
+import com.example.movie.bedto.SeatDTO;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * 作者: 枷
@@ -9,8 +12,12 @@ import lombok.Data;
  */
 @Data
 public class SoldSeatDTO {
+    private Long userId;
+    private Long sessionId;
     private Integer seatRow;
     private Integer seatCol;
     private String orderNo;
     private Integer orderStatus;
+
+    private List<SeatDTO> seats;
 }

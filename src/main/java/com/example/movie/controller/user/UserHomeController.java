@@ -1,7 +1,6 @@
 package com.example.movie.controller.user;
 
 import com.example.movie.bedto.CinemaSession;
-import com.example.movie.bedto.HallPlus;
 import com.example.movie.bedto.SearMovie;
 import com.example.movie.bedto.Trailer;
 import com.example.movie.common.result.Result;
@@ -60,10 +59,4 @@ public class UserHomeController {
         return Result.success(list);
     }
 
-    @GetMapping("/hall/plus/{sessionId}")
-    @ApiOperation("用户端 选座")
-    public Result<HallPlus> getplus(@PathVariable Long sessionId){
-        HallPlus list = uhService.getplus(sessionId);
-        return Result.success(list);
-    }
 }

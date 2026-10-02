@@ -1,7 +1,6 @@
 package com.example.movie.mapper;
 
 import com.example.movie.bedto.CinemaSession;
-import com.example.movie.bedto.HallPlus;
 import com.example.movie.entity.Movie;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -25,6 +24,4 @@ public interface UserHomeMapper {
     List<Movie> homeTop100();
 
     List<CinemaSession> plus(Long id);
-
-    HallPlus getplus(Long sessionId);
 }
