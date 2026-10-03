@@ -4,8 +4,8 @@ import com.example.movie.common.result.PageResult;
 import com.example.movie.common.result.Result;
 import com.example.movie.entity.Notice;
 import com.example.movie.service.NoticeService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/notice")
 @Slf4j
-@Api(tags = "公告管理")
+@Tag(name = "公告管理")
 public class NoticeController {
     @Autowired
     private NoticeService noticeService;
 
     @GetMapping
-    @ApiOperation("首页分页")
+    @Operation(summary = "首页分页")
     public Result getMovie(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer pageSize) {
         log.info("查询首页信息{} {}", page, pageSize);
         PageResult pageResult = noticeService.getNoticePage(page, pageSize);
@@ -34,7 +34,7 @@ public class NoticeController {
 
     // 新增
     @PostMapping
-    @ApiOperation("新增公告")
+    @Operation(summary = "新增公告")
     public Result add(@RequestBody Notice notice) {
         log.info("新增公告{}", notice);
         noticeService.addNotice(notice);
@@ -43,7 +43,7 @@ public class NoticeController {
 
     // 据id回显
     @GetMapping("/{id}")
-    @ApiOperation("据id回显")
+    @Operation(summary = "据id回显")
     public Result idselNotice(@PathVariable Long id) {
         log.info("据id回显{}", id);
         Notice notice =  noticeService.idselNotice(id);
@@ -52,7 +52,7 @@ public class NoticeController {
 
     // 修改
     @PutMapping
-    @ApiOperation("修改公告")
+    @Operation(summary = "修改公告")
     public Result update(@RequestBody Notice notice) {
         log.info("修改公告{}", notice);
         noticeService.updateNotice(notice);
@@ -61,7 +61,7 @@ public class NoticeController {
 
     // 删除
     @DeleteMapping("/{id}")
-    @ApiOperation("删除公告")
+    @Operation(summary = "删除公告")
     public Result delete(@PathVariable Long id) {
         log.info("删除公告{}", id);
         noticeService.deleteNotice(id);
@@ -69,7 +69,7 @@ public class NoticeController {
     }
 
     @PutMapping("/status/{id}/{status}")
-    @ApiOperation("修改公告状态")
+    @Operation(summary = "修改公告状态")
     public Result updaSta(@PathVariable Long id, @PathVariable Integer status) {
         log.info("修改公告状态{}  {}", id, status);
         noticeService.updaSta(id,status);

@@ -4,8 +4,8 @@ import com.example.movie.bedto.NoticeDTO;
 import com.example.movie.common.result.Result;
 import com.example.movie.entity.Notice;
 import com.example.movie.mapper.UserNoticeMapper;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 @Slf4j
-@Api(tags = "用户端")
+@Tag(name = "用户端")
 public class UserNoticeController {
      @Autowired
      private UserNoticeMapper userNoticeMapper;
@@ -33,7 +33,7 @@ public class UserNoticeController {
     @Cacheable(value = "noticeList", key = "'userNotice'")
      //用户端通知
     @GetMapping("/notice")
-    @ApiOperation("用户端通知")
+    @Operation(summary = "用户端通知")
     public Result<List<NoticeDTO>> userNotice(){
         List<Notice> list =  userNoticeMapper.getLine();
         List<NoticeDTO> noti = new ArrayList<>();

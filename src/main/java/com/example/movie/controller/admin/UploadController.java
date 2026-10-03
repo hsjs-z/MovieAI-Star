@@ -2,8 +2,8 @@ package com.example.movie.controller.admin;
 
 import com.example.movie.Utils.OssUtil;
 import com.example.movie.common.result.Result;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,12 +20,12 @@ import java.io.IOException;
  */
 @RestController
 @Slf4j
-@Api(tags = "上传文件")
+@Tag(name = "上传文件")
 public class UploadController {
     @Autowired
     private OssUtil ossUtil;
     @PostMapping("/upload")
-    @ApiOperation(value = "上传文件")
+    @Operation(summary = "上传文件")
     public Result<String> uploadPoster(@RequestParam MultipartFile file) throws IOException {
         // 上传到 poster 文件夹
         String url = ossUtil.uploadFile(file, "poster");

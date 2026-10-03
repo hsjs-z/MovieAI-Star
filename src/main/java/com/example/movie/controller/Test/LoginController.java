@@ -7,7 +7,7 @@ import com.example.movie.common.result.Result;
 import com.example.movie.entity.User;
 import com.example.movie.mapper.UserMapper;
 import com.example.movie.service.impl.UserServiceImpl;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class LoginController {
      * 用户端注册
      */
     @PostMapping("/users/register")
-    @ApiOperation("用户注册")
+    @Operation(summary = "用户注册")
     public Result register(@RequestBody User user) {
         userService.newUser(user);
         return Result.success();
@@ -40,7 +40,7 @@ public class LoginController {
      * 管理端登录
      */
     @PostMapping("/login")
-    @ApiOperation("管理端登录")
+    @Operation(summary = "管理端登录")
     public Result<LoginVO> adminLogin(@RequestBody PassWord passWord) {
         // 查询用户
         User user = userMapper.searUser(passWord.getUsername());
@@ -77,7 +77,7 @@ public class LoginController {
      * 用户端登录
      */
     @PostMapping("/users/login")
-    @ApiOperation("用户端登录")
+    @Operation(summary = "用户端登录")
     public Result<LoginVO> userLogin(@RequestBody PassWord passWord) {
         User user = userMapper.searUser(passWord.getUsername());
         if (user == null || !BCrypt.checkpw(passWord.getPassword(), user.getPassword())) {

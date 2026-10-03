@@ -6,8 +6,8 @@ import com.example.movie.dto.HallDTO;
 import com.example.movie.dto.HallPageQueryDTO;
 import com.example.movie.entity.Hall;
 import com.example.movie.service.HallService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +22,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/hall")
 @Slf4j
-@Api(tags = "影厅管理")
+@Tag(name = "影厅管理")
 public class HallController {
     @Autowired
     private HallService hallService;
 
     @GetMapping
-    @ApiOperation("条件查询影厅")
+    @Operation(summary = "条件查询影厅")
     public Result getHall(HallPageQueryDTO pageQueryDTO) {
         log.info("查询影厅信息{}", pageQueryDTO);
         PageResult pageResult = hallService.getHallPage(pageQueryDTO);
@@ -36,7 +36,7 @@ public class HallController {
     }
 
     @GetMapping("/idname")
-    @ApiOperation("查询影厅名id，用于前端回显")
+    @Operation(summary = "查询影厅名id，用于前端回显")
     public Result getHallName() {
         log.info("查询影厅名id");
         List<HallDTO> list = hallService.getHallName();
@@ -44,7 +44,7 @@ public class HallController {
     }
 
     @PostMapping
-    @ApiOperation("添加影厅")
+    @Operation(summary = "添加影厅")
     public Result addHall(@RequestBody HallDTO hallDTO) {
         log.info("添加影厅{}", hallDTO);
         hallService.addHall(hallDTO);
@@ -52,7 +52,7 @@ public class HallController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation("根据id查询影厅")
+    @Operation(summary = "根据id查询影厅")
     public Result getHallById(@PathVariable Long id) {
         log.info("查询影厅信息{}", id);
         HallDTO hallDTO = hallService.getHallById(id);
@@ -60,7 +60,7 @@ public class HallController {
     }
 
     @PutMapping
-    @ApiOperation("修改影厅")
+    @Operation(summary = "修改影厅")
     public Result updateHall(@RequestBody HallDTO hallDTO) {
         log.info("修改影厅{}", hallDTO);
         hallService.updateHall(hallDTO);
@@ -68,7 +68,7 @@ public class HallController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation("删除影厅")
+    @Operation(summary = "删除影厅")
     public Result deleteHall(@PathVariable Long id) {
         log.info("删除影厅{}", id);
         hallService.deleteHall(id);
@@ -76,7 +76,7 @@ public class HallController {
     }
 
     @GetMapping("/counts")
-    @ApiOperation("返回影厅")
+    @Operation(summary = "返回影厅")
     public Result<List<Hall>> getcountHall() {
         List<Hall> hall = hallService.getHallCon();
         return Result.success(hall);

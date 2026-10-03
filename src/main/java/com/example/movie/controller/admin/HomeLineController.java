@@ -5,8 +5,8 @@ import com.example.movie.dto.DailyRevenueDTO;
 import com.example.movie.dto.HomeLineDTO;
 import com.example.movie.dto.OrderStatusCountDTO;
 import com.example.movie.service.HomeLineService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,27 +23,27 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/homeline")
-@Api(tags = "首页数据")
+@Tag(name = "首页数据")
 @Slf4j
 public class HomeLineController {
     @Autowired
     private HomeLineService homeLineService;
 
     @GetMapping("/line")
-    @ApiOperation("首页数据")
+    @Operation(summary = "首页数据")
     public Result<HomeLineDTO> getHomeLine(){
         return Result.success(homeLineService.gethomeline());
     }
 
 
     @GetMapping("/week")
-    @ApiOperation("近30天收入")
+    @Operation(summary = "近30天收入")
     public Result<List<DailyRevenueDTO>> weeklyRevenue() {
         return Result.success(homeLineService.getWeeklyRevenue());
     }
 
     @GetMapping("/today")
-    @ApiOperation("今日各状态订单数")
+    @Operation(summary = "今日各状态订单数")
     public Result<List<OrderStatusCountDTO>> todayOrderStatus() {
         return Result.success(homeLineService.getTodayOrderStatus());
     }

@@ -100,7 +100,7 @@ public class OrderTimeoutConsumer {
             order.setUpdateTime(LocalDateTime.now());
             orderMapper.updateById(order);
 
-            log.info("✅ 订单[{}]超{}min自动取消，释放{}个座位锁",
+            log.info("订单[{}]超{}min自动取消，释放{}个座位锁",
                     orderId, ORDER_TIMEOUT_SECONDS / 60, seatLocks.size());
         } finally {
             redisTemplate.delete("cancel:lock:" + orderId);

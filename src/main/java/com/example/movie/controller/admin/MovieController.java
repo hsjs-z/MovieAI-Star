@@ -6,8 +6,8 @@ import com.example.movie.dto.MovieDTO;
 import com.example.movie.dto.MoviePageQueryDTO;
 import com.example.movie.dto.MovieUtilsDTO;
 import com.example.movie.service.MovieService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +22,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/movie")
 @Slf4j
-@Api(tags = "电影管理")
+@Tag(name = "电影管理")
 public class MovieController {
     @Autowired
     private MovieService movieService;
     @GetMapping
-    @ApiOperation("条件查询电影")
+    @Operation(summary = "条件查询电影")
     public Result getMovie(MoviePageQueryDTO PageQueryDTO) {
         log.info("查询电影信息{}", PageQueryDTO);
         PageResult pageResult = movieService.getMoviePage(PageQueryDTO);
@@ -35,7 +35,7 @@ public class MovieController {
     }
 
     @GetMapping("/idname")
-    @ApiOperation("查询电影名跟id")
+    @Operation(summary = "查询电影名跟id")
     public Result getMovieidName() {
         log.info("查询影厅名");
         List<MovieDTO> list = movieService.getMovieidName();
@@ -44,7 +44,7 @@ public class MovieController {
 
 
     @PostMapping
-    @ApiOperation("添加电影")
+    @Operation(summary = "添加电影")
     public Result addMovie(@RequestBody MovieDTO movieDTO) {
         log.info("添加电影信息{}", movieDTO);
         movieService.addMovie(movieDTO);
@@ -52,7 +52,7 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation("编辑按钮 根据id查询电影信息")
+    @Operation(summary = "编辑按钮 根据id查询电影信息")
     public Result getMovieById(@PathVariable Long id) {
         log.info("查询电影信息{}", id);
         MovieDTO movieDTO = movieService.getMovieById(id);
@@ -60,7 +60,7 @@ public class MovieController {
     }
 
     @GetMapping("/status/{id}/{status}")
-    @ApiOperation("根据id更改电影状态")
+    @Operation(summary = "根据id更改电影状态")
     public Result updaById(@PathVariable Long id, @PathVariable Integer status) {
         log.info("查询在映{}  {}", id ,status);
         movieService.updaById(id,status);
@@ -68,7 +68,7 @@ public class MovieController {
     }
 
     @PutMapping
-    @ApiOperation("修改按钮")
+    @Operation(summary = "修改按钮")
     public Result updateMovie(@RequestBody MovieDTO movieDTO) {
         log.info("修改电影信息{}", movieDTO);
         movieService.updateMovie(movieDTO);
@@ -76,7 +76,7 @@ public class MovieController {
     }
 
     @DeleteMapping
-    @ApiOperation("删除电影")
+    @Operation(summary = "删除电影")
     public Result delMovie(@RequestParam List<Long> ids) {
         log.info("删除电影信息{}", ids);
         movieService.delMovie(ids);
@@ -84,7 +84,7 @@ public class MovieController {
     }
 
     @GetMapping("/cinema")
-    @ApiOperation("根据电影id查询影院信息")
+    @Operation(summary = "根据电影id查询影院信息")
     public Result<List<MovieUtilsDTO>> cinemas(@RequestParam Long movieId) {
         return Result.success(movieService.getCinemasByMovie(movieId));
     }
