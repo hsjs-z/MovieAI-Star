@@ -13,5 +13,7 @@ import java.util.List;
 public interface UserOrderService {
     List<UserOrderListDTO> getOrderList(Long userId);
 
+    List<UserOrderListDTO> getOrderListWithFilter(Long userId, String movieName, Integer status);
+
     UserOrderDetailDTO getUserOrder(String orderNo, Long userId);
 }

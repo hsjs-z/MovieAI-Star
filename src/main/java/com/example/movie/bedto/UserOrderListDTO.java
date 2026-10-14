@@ -21,5 +21,6 @@ public class UserOrderListDTO {
     private LocalDateTime startTime; // 放映时间
     private BigDecimal totalPrice;   // 总金额
     private Integer status;          // 0待支付 1已支付 2已取消 3已退款
+    private String statusName;       // 中文状态名：待支付/已支付/已取消/已退款
     private LocalDateTime createTime;
 }

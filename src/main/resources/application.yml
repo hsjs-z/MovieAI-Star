@@ -22,11 +22,19 @@ spring:
     url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
     username: ${sky.datasource.username}
     password: ${sky.datasource.password}
-  redis:
-    host: ${sky.redis.host}
-    port: ${sky.redis.port}
-    password: ${sky.redis.password}
-    database: ${sky.redis.database}
+  data:
+    redis:
+      host: ${sky.redis.host}
+      port: ${sky.redis.port}
+      password: ${sky.redis.password}
+      database: ${sky.redis.database}
+  ai:
+    deepseek:
+      api-key: ${DEEPSEEK_API_KEY:}
+      chat:
+        options:
+          model: deepseek-flash
+          temperature: 0.7
 
 mybatis-plus:
   mapper-locations: classpath:mapper/**/*.xml
@@ -48,3 +56,8 @@ alioss:
 jwt:
   secret: REDACTED # 密钥长度≥32位
   expire: 43200000 # 过期时间 12小时，单位毫秒
+
+logging:
+  level:
+    org.springframework.ai.chat.client.advisor: debug
+    com.itheima.heimaai: debug

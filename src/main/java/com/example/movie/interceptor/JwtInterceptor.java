@@ -1,13 +1,12 @@
 package com.example.movie.interceptor;
 
 import com.example.movie.Utils.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 @Slf4j
@@ -66,8 +65,8 @@ public class JwtInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        // 通用角色判断
-        if (uri.startsWith("/users")) {
+        // 通用角色判断：/users 和 /ai 均为普通用户（role=1）可访问
+        if (uri.startsWith("/users") || uri.startsWith("/ai")) {
             if (role == null || role != 1) {
                 response.setContentType("application/json;charset=utf-8");
                 response.setStatus(403);

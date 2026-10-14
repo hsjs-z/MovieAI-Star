@@ -15,6 +15,6 @@
             h.location
         FROM session s
                  JOIN hall h ON h.id = s.hall_id
-        WHERE s.movie_id = #{id} ORDER BY s.start_time ASC
+        WHERE s.movie_id = #{id} AND s.status = 1 ORDER BY s.start_time ASC
     </select>
 </mapper>

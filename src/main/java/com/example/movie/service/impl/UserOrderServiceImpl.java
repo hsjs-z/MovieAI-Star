@@ -1,5 +1,6 @@
 package com.example.movie.service.impl;
 
+import com.example.movie.Utils.DictConvert;
 import com.example.movie.dto.TicketItemDTO;
 import com.example.movie.bedto.OrderDetailRawDTO;
 import com.example.movie.bedto.UserOrderDetailDTO;
@@ -38,6 +39,14 @@ public class UserOrderServiceImpl implements UserOrderService {
         }
         return list;
 
+    }
+
+    public List<UserOrderListDTO> getOrderListWithFilter(Long userId, String movieName, Integer status) {
+        List<UserOrderListDTO> list = userOrderMapper.getOrderListWithFilter(userId, movieName, status);
+        if (list != null) {
+            list.forEach(dto -> dto.setStatusName(DictConvert.orderStatusToName(dto.getStatus())));
+        }
+        return list;
     }
 
 

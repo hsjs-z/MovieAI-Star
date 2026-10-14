@@ -12,7 +12,7 @@ import java.util.List;
  * 时间:2026/7/22 下午3:35
  * 描述:。。。
  */
-public interface MovieService {
+public interface MovieService  {
     PageResult getMoviePage(MoviePageQueryDTO pageQueryDTO);
 
     void addMovie(MovieDTO movieDTO);

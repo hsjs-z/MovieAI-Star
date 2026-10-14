@@ -16,6 +16,10 @@ import java.util.List;
 public interface UserOrderMapper {
     List<UserOrderListDTO> getOrderList(Long userId);
 
+    List<UserOrderListDTO> getOrderListWithFilter(@Param("userId") Long userId,
+                                                  @Param("movieName") String movieName,
+                                                  @Param("status") Integer status);
+
     List<OrderDetailRawDTO> selectOrderDetailByOrderNo(@Param("orderNo") String orderNo,
                                                        @Param("userId") Long userId);
 }
