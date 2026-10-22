@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Date;
 
@@ -29,7 +32,25 @@ public class JwtUtil {
     // 项目启动初始化加密密钥
     @PostConstruct
     public void init() {
-        byte[] bytes = Base64.getDecoder().decode(secretStr);
+        if (secretStr == null || secretStr.isBlank()) {
+            throw new IllegalStateException("JWT 密钥未配置，请设置 JWT_SECRET 环境变量或在 application-local.yml 中配置 jwt.secret");
+        }
+        byte[] bytes;
+        try {
+            // 兼容 Base64 形式的密钥
+            bytes = Base64.getDecoder().decode(secretStr);
+        } catch (IllegalArgumentException e) {
+            bytes = null;
+        }
+        // 非 Base64 或解码后长度不足 32 字节时，用 SHA-256 派生 32 字节密钥，兼容普通字符串
+        if (bytes == null || bytes.length < 32) {
+            try {
+                bytes = MessageDigest.getInstance("SHA-256")
+                        .digest(secretStr.getBytes(StandardCharsets.UTF_8));
+            } catch (NoSuchAlgorithmException e) {
+                throw new IllegalStateException("初始化 JWT 密钥失败", e);
+            }
+        }
         secretKey = Keys.hmacShaKeyFor(bytes);
     }
 
