@@ -141,8 +141,6 @@ seat:{sessionId}:{seatRow}:{seatCol}  →  value = "{userId}:{timestamp}"，TTL 
 
 ## 项目结构
 
-> 以下为本机完整项目结构；本仓库只包含 `movie/` 后端部分，`movie-front` 与 SQL 脚本不在仓库中。
-
 ```
 27Gproject/
 ├── movie_system/                 # 后端
@@ -208,7 +206,7 @@ CREATE DATABASE `movie_system` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_gen
 - `chat_message.sql` — AI 对话消息
 - `seat_lock.sql` — 座位锁记录
 
-> 业务表（`user`、`movie`、`hall`、`session`、`order`、`order_item`、`notice`、`home_line`）请从本地数据库导出后一并导入。本仓库未包含 SQL 脚本，上述三个脚本位于本机项目根目录。
+> 业务表（`user`、`movie`、`hall`、`session`、`order`、`order_item`、`notice`、`home_line`）请从本地数据库导出后一并导入。仓库中的三个 SQL 脚本只覆盖 AI 会话与座位锁相关表。
 
 ### 2. 配置敏感信息
 
@@ -216,7 +214,7 @@ CREATE DATABASE `movie_system` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_gen
 
 **方式一：本地私有配置文件（推荐本地开发）**
 
-在 `src/main/resources/` 下创建 `application-local.yml`（该文件已被 `.gitignore` 忽略）：
+在 `movie_system/movie/src/main/resources/` 下创建 `application-local.yml`（该文件已被 `.gitignore` 忽略）：
 
 ```yaml
 sky:
@@ -254,9 +252,8 @@ $env:ALIYUN_OSS_ACCESS_KEY_SECRET="你的AccessKeySecret"
 
 ### 3. 启动后端
 
-在仓库根目录执行：
-
 ```powershell
+cd movie_system/movie
 mvn spring-boot:run
 ```
 
@@ -267,10 +264,8 @@ mvn spring-boot:run
 
 ### 4. 启动前端
 
-> 前端代码不在本仓库中，位于本机项目的 `movie-front` 目录。
-
 ```powershell
-cd ../movie-front
+cd movie-front
 npm install
 npm run dev
 ```
