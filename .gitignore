@@ -3,3 +3,6 @@ target/
 
 # IDE配置
 .idea/
+
+# 本地私有配置（含密钥，禁止提交）
+src/main/resources/application-local.yml
